@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,18 +8,39 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-        
-        AnimatedTextKit(
-          animatedTexts: 
-            [
-              TypewriterAnimatedText(
-                
-              ),
-            ]
-          )
-        
-        ,
+        title: AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              'Traiteur Demo',
+              textStyle: monPropreStyleText,
+              speed: const Duration(milliseconds: 200),
+            ),
+
+            // RotateAnimatedText('Traiteur Demo', textStyle: monPropreStyleText),
+
+            // TyperAnimatedText('Traiteur Demo', textStyle: monPropreStyleText),
+
+            // ColorizeAnimatedText(
+            //   'Bon appetito !',
+            //   textStyle: GoogleFonts.blackOpsOne(
+            //     textStyle: const TextStyle(
+            //       fontSize: 50,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            //   colors: [
+            //     Colors.purple,
+            //     Colors.blue,
+            //     Colors.yellow,
+            //     Colors.red,
+            //   ],
+            // ),
+          ],
+          totalRepeatCount: 4,
+          pause: const Duration(milliseconds: 1000),
+          displayFullTextOnTap: true,
+          stopPauseOnTap: true,
+        ),
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton(
@@ -97,9 +119,10 @@ ButtonStyle monPropreStyleButton = ElevatedButton.styleFrom(
   elevation: 6,
 );
 
-TextStyle monPropreStyleText = const TextStyle(
-  color: Colors.purple,
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-  fontFamily: 'Roboto',
+TextStyle monPropreStyleText = GoogleFonts.roboto(
+  textStyle: const TextStyle(
+    color: Colors.purple,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  ),
 );

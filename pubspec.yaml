@@ -38,6 +38,8 @@ dependencies:
 
   # Ajout de la dépendance pour annimer les textes
   animated_text_kit: ^4.2.2
+  # Ajout de google_fonts pour utiliser les polices de caractères de google
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
