@@ -19,8 +19,8 @@ Cette application Flutter permet la gestion efficace des commandes pour un servi
 ```
 lib/
 ├── models/
-├──services/
-├──views/
+├── services/
+├── views/
 └── widgets/
 server/ (pour le code Node.js)
 ```
@@ -35,6 +35,7 @@ server/ (pour le code Node.js)
 2. **Installation des Dépendances Flutter :**
     ```
     cd your-project-directory
+    flutter create .
     flutter pub get
     ```
 
