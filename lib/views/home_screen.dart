@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           ElevatedButton(
             style: monPropreStyleButton,
-            onPressed: () => {},
+            onPressed: () => {print('Catalogue des plats')},
             child: Text(
               'Catalogue des plats',
               style: monPropreStyleText,
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 30),
           ElevatedButton(
             style: monPropreStyleButton,
-            onPressed: () => {},
+            onPressed: () => {print('Gestion des commandes')},
             child: Text(
               'Gestion des commandes',
               style: monPropreStyleText,
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 30),
           ElevatedButton(
             style: monPropreStyleButton,
-            onPressed: () => {},
+            onPressed: () => {print('Espace client')},
             child: Text(
               'Espace client',
               style: monPropreStyleText,
