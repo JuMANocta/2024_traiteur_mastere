@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,20 +7,28 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Gestion Commandes Traiteur', 
-          style: monPropreStyleText,
-        ),
+        title:
+        
+        AnimatedTextKit(
+          animatedTexts: 
+            [
+              TypewriterAnimatedText(
+                
+              ),
+            ]
+          )
+        
+        ,
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton(
-            itemBuilder: (BuildContext context)=> [
+            icon: const Icon(Icons.menu),
+            itemBuilder: (BuildContext context) => [
               const PopupMenuItem(
                 value: 'Catalogue',
                 child: ListTile(
-                  leading: Icon(Icons.food_bank),
-                  title: Text ('Catalogue des plats')
-                ),
+                    leading: Icon(Icons.food_bank),
+                    title: Text('Catalogue des plats')),
               ),
               const PopupMenuItem(
                 value: 'commandes',
@@ -29,12 +38,11 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const PopupMenuItem(
-                value: 'client',
-                child: ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text('Espace client'),
-                )
-              ),
+                  value: 'client',
+                  child: ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text('Espace client'),
+                  )),
             ],
           )
         ],
@@ -47,23 +55,25 @@ class HomeScreen extends StatelessWidget {
             style: monPropreStyleButton,
             onPressed: () => {},
             child: Text(
-              'Catalogue des plats', 
-              style: monPropreStyleText,),
+              'Catalogue des plats',
+              style: monPropreStyleText,
+            ),
           ),
           const SizedBox(height: 30),
           ElevatedButton(
             style: monPropreStyleButton,
             onPressed: () => {},
             child: Text(
-              'Gestion des commandes', 
-              style: monPropreStyleText,),
+              'Gestion des commandes',
+              style: monPropreStyleText,
+            ),
           ),
           const SizedBox(height: 30),
           ElevatedButton(
             style: monPropreStyleButton,
             onPressed: () => {},
             child: Text(
-              'Espace client', 
+              'Espace client',
               style: monPropreStyleText,
             ),
           ),
