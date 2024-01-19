@@ -11,5 +11,73 @@ class DataBaseHelper {
 
   DataBaseHelper._init();
 
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+    _database = await _initDB('traiteur.db');
+    return _database!;
+  }
+
+  Future<Database> _initDB(String filePath) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
+    return await openDatabase(path, version: 1, onCreate: _createDB);
+  }
+
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE plats (
+        id INT PRIMARY KEY AUTOINCREMENT,
+        nom TEXT NOT NULL,
+        description TEXT NOT NULL,
+        prix REAL NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE clients (
+        id INT PRIMARY KEY AUTOINCREMENT,
+        nom TEXT NOT NULL,
+        prenom TEXT NOT NULL,
+        email TEXT NOT NULL,
+        adresse TEXT NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE commandes (
+        id INT PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL,
+        total REAL NOT NULL,
+        client_id INT NOT NULL,
+        FOREIGN KEY (client_id) REFERENCES clients (id)
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE commande_plat (
+        id INT PRIMARY KEY AUTOINCREMENT,
+        id_commande INT NOT NULL,
+        id_plat INT NOT NULL,
+        FOREIGN KEY (id_commande) REFERENCES commandes (id),
+        FOREIGN KEY (id_plat) REFERENCES plats (id)
+      )
+    ''');
+  }
+
+  // CRUD de plat
+  Future<Plat?> readPlat(int id) async {
+    // SELECT * FROM plats WHERE id = id
+    final db = await database;
+    final maps = await db.query(
+      'plats',
+      columns: ['id', 'nom', 'description', 'image', 'prix'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return Plat.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
   
 }
