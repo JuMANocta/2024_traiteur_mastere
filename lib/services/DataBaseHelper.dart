@@ -64,6 +64,19 @@ class DataBaseHelper {
   }
 
   // CRUD de plat
+  //C
+  Future<Plat> createPlat(Plat plat) async {
+    final db = await database;
+    final id = await db.insert('plats', plat.toMap());
+    return Plat(
+        id: id,
+        nom: plat.nom,
+        description: plat.description,
+        image: plat.image,
+        prix: plat.prix);
+  }
+
+  //R
   Future<Plat?> readPlat(int id) async {
     // SELECT * FROM plats WHERE id = id
     final db = await database;
@@ -79,5 +92,31 @@ class DataBaseHelper {
       return null;
     }
   }
-  
+
+  //U
+  Future<int> updatePlat(Plat plat) async {
+    final db = await database;
+    return db.update(
+      'plats',
+      plat.toMap(),
+      where: 'id = ?',
+      whereArgs: [plat.id],
+    );
+  }
+
+  //D
+  Future<int> deletePlat(int id) async {
+    final db = await database;
+    return await db.delete(
+      'plat',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // Fermeture de la BDD
+  Future closeBdd() async {
+    final db = await instance.database;
+    db.close();
+  }
 }
