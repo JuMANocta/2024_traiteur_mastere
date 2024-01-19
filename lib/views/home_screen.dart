@@ -73,30 +73,37 @@ class HomeScreen extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ElevatedButton(
-            style: monPropreStyleButton,
-            onPressed: () => {print('Catalogue des plats')},
-            child: Text(
-              'Catalogue des plats',
-              style: monPropreStyleText,
-            ),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            style: monPropreStyleButton,
-            onPressed: () => {print('Gestion des commandes')},
-            child: Text(
-              'Gestion des commandes',
-              style: monPropreStyleText,
-            ),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            style: monPropreStyleButton,
-            onPressed: () => {print('Espace client')},
-            child: Text(
-              'Espace client',
-              style: monPropreStyleText,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  style: monPropreStyleButton,
+                  onPressed: () => {print('Catalogue des plats')},
+                  child: Text(
+                    'Catalogue des plats',
+                    style: monPropreStyleText,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  style: monPropreStyleButton,
+                  onPressed: () => {print('Gestion des commandes')},
+                  child: Text(
+                    'Gestion des commandes',
+                    style: monPropreStyleText,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  style: monPropreStyleButton,
+                  onPressed: () => {print('Espace client')},
+                  child: Text(
+                    'Espace client',
+                    style: monPropreStyleText,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -119,7 +126,7 @@ ButtonStyle monPropreStyleButton = ElevatedButton.styleFrom(
   elevation: 6,
 );
 
-TextStyle monPropreStyleText = GoogleFonts.roboto(
+TextStyle monPropreStyleText = GoogleFonts.blackOpsOne(
   textStyle: const TextStyle(
     color: Colors.purple,
     fontSize: 20,
