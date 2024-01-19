@@ -106,6 +106,17 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          //pied de page
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            color: Colors.purple[50],
+            child: Text(
+              'Traiteur Demo © 2024',
+              textAlign: TextAlign.center,
+              style: monPropreStyleText,
+            ),
+          ),
         ],
       )),
     );
