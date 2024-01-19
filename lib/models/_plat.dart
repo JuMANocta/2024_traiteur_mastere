@@ -1,11 +1,11 @@
-class Plats {
+class Plat {
   final int id;
   final String nom;
   final String description;
   final String image;
   final double prix;
 
-  Plats({
+  Plat({
     required this.id,
     required this.nom,
     required this.description,
@@ -13,8 +13,8 @@ class Plats {
     required this.prix,
   });
 
-  factory Plats.fromMap(Map<String, dynamic> map) {
-    return Plats(
+  factory Plat.fromMap(Map<String, dynamic> map) {
+    return Plat(
       id: map['id'],
       nom: map['nom'],
       description: map['description'],
