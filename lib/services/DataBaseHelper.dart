@@ -114,6 +114,57 @@ class DataBaseHelper {
     );
   }
 
+  // CRUD de client
+  //C
+  Future<Client> createClient(Client client) async {
+    final db = await database;
+    final id = await db.insert('clients', client.toMap());
+    return Client(
+        id: id,
+        nom: client.nom,
+        prenom: client.prenom,
+        email: client.email,
+        adresse: client.adresse);
+  }
+
+  //R
+  Future<Client?> readClient(int id) async {
+    // SELECT * FROM clients WHERE id = id
+    final db = await database;
+    final maps = await db.query(
+      'clients',
+      columns: ['id', 'nom', 'prenom', 'email', 'adresse'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return Client.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  //U
+  Future<int> updateClient(Client client) async {
+    final db = await database;
+    return db.update(
+      'clients',
+      client.toMap(),
+      where: 'id = ?',
+      whereArgs: [client.id],
+    );
+  }
+
+  //D
+  Future<int> deleteClient(int id) async {
+    final db = await database;
+    return await db.delete(
+      'clients',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   // Fermeture de la BDD
   Future closeBdd() async {
     final db = await instance.database;
