@@ -28,7 +28,7 @@ class DataBaseHelper {
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE plats (
-        id INT PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom TEXT NOT NULL,
         description TEXT NOT NULL,
         prix REAL NOT NULL
@@ -36,7 +36,7 @@ class DataBaseHelper {
     ''');
     await db.execute('''
       CREATE TABLE clients (
-        id INT PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom TEXT NOT NULL,
         prenom TEXT NOT NULL,
         email TEXT NOT NULL,
@@ -45,18 +45,19 @@ class DataBaseHelper {
     ''');
     await db.execute('''
       CREATE TABLE commandes (
-        id INT PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
         total REAL NOT NULL,
-        client_id INT NOT NULL,
+        client_id INTEGER NOT NULL,
         FOREIGN KEY (client_id) REFERENCES clients (id)
       )
     ''');
     await db.execute('''
       CREATE TABLE commande_plat (
-        id INT PRIMARY KEY AUTOINCREMENT,
-        id_commande INT NOT NULL,
-        id_plat INT NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_commande INTEGER NOT NULL,
+        id_plat INTEGER NOT NULL,
+        quantite INTEGER NOT NULL,
         FOREIGN KEY (id_commande) REFERENCES commandes (id),
         FOREIGN KEY (id_plat) REFERENCES plats (id)
       )
