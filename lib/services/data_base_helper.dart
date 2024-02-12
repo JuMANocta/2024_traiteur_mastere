@@ -165,6 +165,106 @@ class DataBaseHelper {
     );
   }
 
+  // CRUD de commande.dart
+  //C
+  Future<Commande> createCommande(Commande commande) async {
+    final db = await database;
+    final id = await db.insert('commandes', commande.toMap());
+    return Commande(
+      id: id,
+      clientId: commande.clientId,
+      total: commande.total,
+      dateCommande: commande.dateCommande,
+    );
+  }
+
+  //R
+  Future<Commande?> readCommande(int id) async {
+    final db = await database;
+    final maps = await db.query(
+      'commandes',
+      columns: ['id', 'clientId', 'total', 'dateCommande'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return Commande.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  //U
+  Future<int> updateCommande(Commande commande) async {
+    final db = await database;
+    return db.update(
+      'commandes',
+      commande.toMap(),
+      where: 'id = ?',
+      whereArgs: [commande.id],
+    );
+  }
+  
+  //D
+  Future<int> deleteCommande(int id) async {
+    final db = await database;
+    return await db.delete(
+      'commandes',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+  
+//C
+Future<CommandePlat> createCommandePlat(CommandePlat commandePlat) async {
+  final db = await database;
+  final id = await db.insert('commande_plats', commandePlat.toMap());
+  return CommandePlat(
+    id: id,
+    idCommande: commandePlat.idCommande,
+    idPlat: commandePlat.idPlat,
+    quantite: commandePlat.quantite,
+  );
+}
+
+//R
+Future<CommandePlat?> readCommandePlat(int id) async {
+  final db = await database;
+  final maps = await db.query(
+    'commande_plats',
+    columns: ['id', 'commandeId', 'platId', 'quantite'],
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+  if (maps.isNotEmpty) {
+    return CommandePlat.fromMap(maps.first);
+  } else {
+    return null;
+  }
+}
+
+//U
+Future<int> updateCommandePlat(CommandePlat commandePlat) async {
+  final db = await database;
+  return db.update(
+    'commande_plats',
+    commandePlat.toMap(),
+    where: 'id = ?',
+    whereArgs: [commandePlat.id],
+  );
+}
+
+//D
+Future<int> deleteCommandePlat(int id) async {
+  final db = await database;
+  return await db.delete(
+    'commande_plats',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
+  
+
   // Fermeture de la BDD
   Future closeBdd() async {
     final db = await instance.database;

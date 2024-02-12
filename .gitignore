@@ -50,3 +50,5 @@ macos
 test
 web
 windows
+*.bkp
+*.dtmp

@@ -1,12 +1,14 @@
-class CommandePlat{
+class CommandePlat {
   final int id;
   final int idCommande;
   final int idPlat;
+  final int quantite;
 
   CommandePlat({
     required this.id,
     required this.idCommande,
     required this.idPlat,
+    required this.quantite
   });
 
   factory CommandePlat.fromMap(Map<String, dynamic> map) {
@@ -14,6 +16,7 @@ class CommandePlat{
       id: map['id'],
       idCommande: map['idCommande'],
       idPlat: map['idPlat'],
+      quantite: map['quantite'],
     );
   }
 
@@ -22,7 +25,7 @@ class CommandePlat{
       'id': id,
       'idCommande': idCommande,
       'idPlat': idPlat,
+      'quantite': quantite,
     };
   }
-
 }
