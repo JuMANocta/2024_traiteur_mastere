@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:_2024_traiteur_mastere/views/creer_client.dart';
+import 'package:_2024_traiteur_mastere/views/admin_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -98,15 +98,23 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: monPropreStyleButton,
+                  onPressed: () => {print('Espace client')},
+                  child: Text(
+                    'Espace client',
+                    style: monPropreStyleText,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  style: monPropreStyleButton,
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreerClient()),
+                      MaterialPageRoute(builder: (context) => AdminDashboard()),
                     )
                   },
                   child: Text(
-                    'Espace client',
+                    'Espace Admin',
                     style: monPropreStyleText,
                   ),
                 ),

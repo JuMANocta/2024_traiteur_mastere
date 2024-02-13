@@ -64,6 +64,8 @@ class _CreerClientState extends State<CreerClient> {
                   labelText: 'Adresse',
                 ),
               ),
+              // placer un espace entre les champs et le bouton
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   // Utilisation des valeurs des contrôleurs ici
