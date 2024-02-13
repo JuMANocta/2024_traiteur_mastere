@@ -6,7 +6,7 @@ class Client {
   String adresse;
 
   Client({
-    required this.id, 
+    required this.id,
     required this.nom, 
     required this.prenom, 
     required this.email, 
