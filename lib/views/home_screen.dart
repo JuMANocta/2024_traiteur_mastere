@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:_2024_traiteur_mastere/views/admin_screen.dart';
+import 'package:_2024_traiteur_mastere/views/admin/admin_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -108,10 +108,7 @@ class HomeScreen extends StatelessWidget {
                 ElevatedButton(
                   style: monPropreStyleButton,
                   onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AdminDashboard()),
-                    )
+                    Navigator.of(context).push(customPageRouteBuilder(const AdminDashboard()))
                   },
                   child: Text(
                     'Espace Admin',
@@ -159,3 +156,19 @@ TextStyle monPropreStyleText = GoogleFonts.blackOpsOne(
     fontWeight: FontWeight.bold,
   ),
 );
+
+PageRouteBuilder customPageRouteBuilder(Widget destinationPage) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => destinationPage,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = const Offset(0.0, 1.0); // Commence en bas de l'écran
+      var end = Offset.zero; // Termine à sa position normale
+      var curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}

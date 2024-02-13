@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:_2024_traiteur_mastere/views/creer_client.dart';
-import 'package:_2024_traiteur_mastere/views/creer_plat.dart';
-import 'package:_2024_traiteur_mastere/views/gerer_commandes.dart';
+import 'package:_2024_traiteur_mastere/views/admin/creer_client.dart';
+import 'package:_2024_traiteur_mastere/views/admin/creer_plat.dart';
+import 'package:_2024_traiteur_mastere/views/admin/gerer_commandes.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
