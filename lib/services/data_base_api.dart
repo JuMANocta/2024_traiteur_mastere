@@ -4,9 +4,10 @@ import 'package:_2024_traiteur_mastere/models/client.dart';
 import 'package:_2024_traiteur_mastere/models/plat.dart';
 
 class ApiService {
-  final String _baseUrl = 'http://localhost:5000/api/clients';
+  String _baseUrl = 'http://localhost:5000/api/';
 
   Future<bool> creerClient(Client client) async {
+    _baseUrl += 'clients';
     final response = await http.post(
       Uri.parse(_baseUrl),
       headers: <String, String>{
@@ -24,6 +25,7 @@ class ApiService {
 
   // créer la fonction creerplat pour ajouter un plat avec l'api sachant que le plat correspond à son model de plat
   Future<bool> creerplat(Plat plat) async {
+    _baseUrl += 'plats';
     final response = await http.post(
       Uri.parse(_baseUrl),
       headers: <String, String>{

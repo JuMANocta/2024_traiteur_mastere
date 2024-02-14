@@ -9,7 +9,7 @@ import 'dart:io';
 // Assurez-vous d'avoir la classe Plat définie quelque part dans votre projet
 
 class AjouterPlat extends StatefulWidget {
-  const AjouterPlat({Key? key}) : super(key: key);
+  const AjouterPlat({super.key});
 
   @override
   _AjouterPlatState createState() => _AjouterPlatState();
@@ -22,6 +22,15 @@ class _AjouterPlatState extends State<AjouterPlat> {
   final TextEditingController _prixController = TextEditingController();
   File? _image;
 
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+  
   Future<void> _pickAndCropImage(BuildContext context) async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -113,14 +122,13 @@ class _AjouterPlatState extends State<AjouterPlat> {
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
-                  onPressed: () => _pickAndCropImage(context),
+                  onPressed: _pickImage,
                   child: const Text('Sélectionner une image'),
                 ),
                 if (_image != null) Image.file(_image!),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // print(_imageToBase64(_image!));
                     if (_formKey.currentState!.validate()) {
                       var nouveauPlat = Plat(
                         id: 0,
