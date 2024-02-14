@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:_2024_traiteur_mastere/models/plat.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:_2024_traiteur_mastere/models/plat.dart';
+import 'package:_2024_traiteur_mastere/services/data_base_api.dart';
+import 'dart:io';
+
+// Assurez-vous d'avoir la classe Plat définie quelque part dans votre projet
 
 class AjouterPlat extends StatefulWidget {
-  const AjouterPlat({super.key});
+  const AjouterPlat({Key? key}) : super(key: key);
 
   @override
   _AjouterPlatState createState() => _AjouterPlatState();
@@ -14,37 +19,57 @@ class _AjouterPlatState extends State<AjouterPlat> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nomController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
   final TextEditingController _prixController = TextEditingController();
+  File? _image;
 
-  Future<void> ajouterPlat(Plat plat) async {
-    // Remplacez l'URL par l'URL de votre API
-    var url = Uri.parse('http://votre-api-url.com/plats');
-
-    var response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(plat.toMap()),
-    );
-
-    if (response.statusCode == 200) {
-      // Gestion de la réponse réussie (vous pouvez ajuster selon vos besoins)
-      print('Plat ajouté avec succès');
-    } else {
-      // Gestion de l'erreur
-      print('Erreur lors de l\'ajout du plat');
+  Future<void> _pickAndCropImage(BuildContext context) async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: pickedFile.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 100, // Ajustez la qualité si nécessaire
+        maxWidth: 500, // Ajustez la taille pour l'optimisation web/mobile
+        maxHeight: 500,
+        cropStyle: CropStyle.rectangle, // ou CropStyle.circle pour un cercle
+        compressFormat: ImageCompressFormat.jpg,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Recadrer',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.square,
+              lockAspectRatio: true),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort:
+                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          _image = File(croppedFile.path);
+        });
+      }
     }
   }
 
-  @override
-  void dispose() {
-    _nomController.dispose();
-    _descriptionController.dispose();
-    _imageController.dispose();
-    _prixController.dispose();
-    super.dispose();
+  String _imageToBase64(File image) {
+    final bytes = image.readAsBytesSync();
+    return base64Encode(bytes);
   }
 
   @override
@@ -76,10 +101,6 @@ class _AjouterPlatState extends State<AjouterPlat> {
                   decoration: const InputDecoration(labelText: 'Description'),
                 ),
                 TextFormField(
-                  controller: _imageController,
-                  decoration: const InputDecoration(labelText: 'URL de l\'image'),
-                ),
-                TextFormField(
                   controller: _prixController,
                   decoration: const InputDecoration(labelText: 'Prix'),
                   keyboardType: TextInputType.number,
@@ -91,25 +112,26 @@ class _AjouterPlatState extends State<AjouterPlat> {
                   },
                 ),
                 const SizedBox(height: 20),
+                OutlinedButton(
+                  onPressed: () => _pickAndCropImage(context),
+                  child: const Text('Sélectionner une image'),
+                ),
+                if (_image != null) Image.file(_image!),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
+                    // print(_imageToBase64(_image!));
                     if (_formKey.currentState!.validate()) {
-                      // Création de l'objet Plat
                       var nouveauPlat = Plat(
-                        id: 0, // L'ID sera généralement généré par l'API
+                        id: 0,
                         nom: _nomController.text,
                         description: _descriptionController.text,
-                        image: _imageController.text,
+                        image: _image != null ? _imageToBase64(_image!) : '',
                         prix: double.parse(_prixController.text),
                       );
-
-                      // Appel de la fonction pour ajouter le plat
-                      ajouterPlat(nouveauPlat);
-
-                      // Nettoyer les champs après l'envoi
+                      ApiService().creerplat(nouveauPlat);
                       _nomController.clear();
                       _descriptionController.clear();
-                      _imageController.clear();
                       _prixController.clear();
                     }
                   },

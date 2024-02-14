@@ -2,7 +2,7 @@ class Plat {
   final int id;
   final String nom;
   final String description;
-  final String image;
+  String image;
   final double prix;
 
   Plat({

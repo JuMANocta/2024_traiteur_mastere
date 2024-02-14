@@ -82,7 +82,7 @@ class _CreerClientState extends State<CreerClient> {
                     adresse: adresse,
                   );
                   // Utiliser le service data_base_api pour ajouter le client
-                  bool resultat = await ClientService().creerClient(client);
+                  bool resultat = await ApiService().creerClient(client);
                   // Vérifier si le widget est toujours monté avant de faire des actions
                   if (mounted) {
                     if (resultat) {
